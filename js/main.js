@@ -69,15 +69,16 @@ var tasks = new Tasks([
   },
   
   render: function () {
+   this.$el.html("");
    this.collection.each(function(task){
     var taskView = new TaskView({model:task});
 	taskView.render();
 	this.$el.append(taskView.el);
    }, this);
-   $("body").append(this.$el);
+   $("#main").html(this.$el);
   }
  })
  
  var tasksView = new TasksView({collection:tasks});
- 
+ tasks.add({name:"new task 5", text:"is som thing interesting..."});
  

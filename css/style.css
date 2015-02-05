@@ -1,3 +1,26 @@
+
+li {
+ margin:2px;
+}
+
 p {
  color:#ffcc00;
+}
+
+.task {
+ background:blue;
+ color:black;
+ border:2px solid black;
+ border-radius:5px;
+}
+
+
+.task  > p {
+ color:black;
+}
+
+p.time {
+ color:red;
+ text-align:right;
+ font-size:8pt;
 }

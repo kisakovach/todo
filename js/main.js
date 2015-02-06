@@ -34,7 +34,11 @@ var taskView= new TaskView({model:task});
 //Collection
 
 var Tasks = Backbone.Collection.extend({
- model:Task
+ model:Task,
+ 
+ saveTo:function(){
+  localStorage.setItem("saveTask", this);
+ }
 });
 
 var tasks = new Tasks([
@@ -64,7 +68,7 @@ var tasks = new Tasks([
  var TasksView = Backbone.View.extend({
   tagName:"ul",
   
-  inisialize:function (){
+  initialize:function (){
    this.render();
   },
   

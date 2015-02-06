@@ -37,9 +37,16 @@ var Tasks = Backbone.Collection.extend({
  model:Task,
  
  saveTo:function(){
-  localStorage.setItem("saveTask", this);
+  localStorage.setItem("tasks", JSON.stringify(this.toJSON()));
+ },
+ 
+ load:function(){
+  this.set(JSON.parse(localStorage.getItem("tasks")));
  }
 });
+
+
+
 
 var tasks = new Tasks([
 { 
@@ -77,12 +84,12 @@ var tasks = new Tasks([
    this.collection.each(function(task){
     var taskView = new TaskView({model:task});
 	taskView.render();
-	this.$el.append(taskView.el);
+	this.$el.append(taskView.$el);
    }, this);
    $("#main").html(this.$el);
   }
  })
  
  var tasksView = new TasksView({collection:tasks});
- tasks.add({name:"new task 5", text:"is som thing interesting..."});
+ tasks.add({name:"new task 5", text:"is some thing interesting..."});
  

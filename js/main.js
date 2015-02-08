@@ -1,40 +1,50 @@
+(function(){
 
-//model
+ window.App = {
+  Model:{},
+  View:{},
+  Collection:{}
+ };
+ 
+ App.defaultDeadLine = function(){
+  var p = new Date();
+  p.setHours(p.getHours()+1);
+  return p;
+ }
 
-function defaultDeadLine(){
- var p = new Date();
- p.setHours(p.getHours()+1);
- return p;
-}
-
-var Task = Backbone.Model.extend({
+ App.template = function(id){
+  return _.template($('#'+id).html());
+ }
+ 
+ //model
+ App.Model.Task = Backbone.Model.extend({
   defaults: {
     "name":  "New task",
     "time":  new Date(),
     "text":  "New text",
-	"deadLine": defaultDeadLine()
+	"deadLine": App.defaultDeadLine()
   }
-});
+ });
+
 
 //view 
 
-var TaskView = Backbone.View.extend({
- tagName:"li",
- template:"#task_id",
- render:function(){
-  var template=_.template($(this.template).html());
-  this.$el.html(template(this.model.toJSON()));
- }
-})
+ App.View.TaskView = Backbone.View.extend({
+  tagName:"li",
+  
+  template: App.template("task_id"),
+  
+  render:function(){
+   this.$el.html(this.template(this.model.toJSON()));
+   return this;
+  }
+ });
 
-
-var task = new Task({name:"Task1", text:"My first task"});
-var taskView= new TaskView({model:task}); 
-
-//Collection
-
-var Tasks = Backbone.Collection.extend({
- model:Task,
+  
+ 
+ //collection
+ App.Collection.Tasks = Backbone.Collection.extend({
+ model:App.Model.Task,
  
  saveTo:function(){
   localStorage.setItem("tasks", JSON.stringify(this.toJSON()));
@@ -47,8 +57,17 @@ var Tasks = Backbone.Collection.extend({
 
 
 
+var task = new App.Model.Task({name:"Task1", text:"My first task"});
+var taskView= new App.View.TaskView({model:task}); 
 
-var tasks = new Tasks([
+//Collection
+
+
+
+
+
+
+var tasks = new App.Collection.Tasks([
 { 
   name:"New task1", 
   deadLine:"21.02.2015 10:21:45", 
@@ -72,7 +91,7 @@ var tasks = new Tasks([
  
  // Views Collection
  
- var TasksView = Backbone.View.extend({
+App.View.TasksView = Backbone.View.extend({
   tagName:"ul",
   
   initialize:function (){
@@ -82,14 +101,16 @@ var tasks = new Tasks([
   render: function () {
    this.$el.html("");
    this.collection.each(function(task){
-    var taskView = new TaskView({model:task});
+    var taskView = new App.View.TaskView({model:task});
 	taskView.render();
 	this.$el.append(taskView.$el);
    }, this);
    $("#main").html(this.$el);
   }
- })
+ });
  
- var tasksView = new TasksView({collection:tasks});
+ 
+ var tasksView = new App.View.TasksView({collection:tasks});
  tasks.add({name:"new task 5", text:"is some thing interesting..."});
  
+ }());

@@ -6,9 +6,13 @@
 </head>
  <link rel="stylesheet" type='text/css' href='css/style.css'>
  <script type="text/template" id="task_id">
- <div class = "task">
-  <p><strong> <%= name %></strong></p>: <%= text%><p class ="time"> - <%= deadLine %> </p>
- </div>
+  <div class = "task">
+   <p class = "caption"><strong> <%= name %></strong></p>
+   <div class="text"><%= text%></div>
+   <button class = "edit">edit</button>
+   <button class = "delete"> delete </button>
+   <p class ="time"> - <%= deadLine %> </p>
+  </div>
  </script>
   <body>
     <header>

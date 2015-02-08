@@ -1,9 +1,9 @@
 (function(){
 
  window.App = {
-  Model:{},
-  View:{},
-  Collection:{}
+  Models:{},
+  Views:{},
+  Collections:{}
  };
  
  App.defaultDeadLine = function(){
@@ -12,105 +12,104 @@
   return p;
  }
 
- App.template = function(id){
+ window.template = function(id){
   return _.template($('#'+id).html());
  }
  
  //model
- App.Model.Task = Backbone.Model.extend({
+ App.Models.Task = Backbone.Model.extend({
   defaults: {
-    "name":  "New task",
-    "time":  new Date(),
-    "text":  "New text",
-	"deadLine": App.defaultDeadLine()
+    name:  "New task",
+    time:  new Date(),
+    text:  "New text",
+	  priorety: 5,
+    deadLine: App.defaultDeadLine()
   }
  });
 
 
 //view 
 
- App.View.TaskView = Backbone.View.extend({
-  tagName:"li",
+
+ App.Views.Task = Backbone.View.extend({
   
-  template: App.template("task_id"),
+  tagName: "li",
   
-  render:function(){
+  template: template("task_id"),
+
+  render: function(){
    this.$el.html(this.template(this.model.toJSON()));
    return this;
+  },
+
+  events: {
+   "click": "showAlert"
+  },
+
+  showAlert: function(){
+    alert("You are clkiked to '"+this.model.get("name")+"'");
   }
  });
 
+// Views Collection
+
+App.Views.Tasks = Backbone.View.extend({
+  
+  tagName: "ul",
+  
+  initialize: function (){
+   this.render();
+   
+  },
+  
+  addOne: function( task ){ 
+   
+   var taskView = new App.Views.Task({ model:task });
+   this.$el.append( taskView.render().$el ); 
+  
+  },
+
+  render: function () {
+   this.$el.html("");
+   this.collection.each(this.addOne, this);
+   return this;
+   //$("#main").html(this.$el);
+  }
+});
   
  
  //collection
- App.Collection.Tasks = Backbone.Collection.extend({
- model:App.Model.Task,
+App.Collections.Task = Backbone.Collection.extend({
  
- saveTo:function(){
-  localStorage.setItem("tasks", JSON.stringify(this.toJSON()));
- },
+  model: App.Models.Task
  
- load:function(){
-  this.set(JSON.parse(localStorage.getItem("tasks")));
- }
 });
-
-
-
-var task = new App.Model.Task({name:"Task1", text:"My first task"});
-var taskView= new App.View.TaskView({model:task}); 
-
-//Collection
-
-
-
-
-
-
-var tasks = new App.Collection.Tasks([
+ 
+App.tasks = new App.Collections.Task([
 { 
-  name:"New task1", 
+  name:"Сходить в магаз", 
   deadLine:"21.02.2015 10:21:45", 
   text:"Text1"
-  },
+},
 {
- name:"New task2",
+ name:"Проверить почту",
  deadLine:"20.02.2015 11:21:45", 
  text:"Text2"
 },
 {
- name:"New task3", 
+ name:"Сходитьна работу", 
  deadLine:"18.02.2015 13:21:45", 
- text:"Text3"},
- {
- name:"New task4",
+ text:"Text3"
+},
+{
+ name:"Пойти в кино",
  deadLine:"16.02.2015 15:21:45", 
  text:"Text4"
 }
  ]);
  
- // Views Collection
- 
-App.View.TasksView = Backbone.View.extend({
-  tagName:"ul",
-  
-  initialize:function (){
-   this.render();
-  },
-  
-  render: function () {
-   this.$el.html("");
-   this.collection.each(function(task){
-    var taskView = new App.View.TaskView({model:task});
-	taskView.render();
-	this.$el.append(taskView.$el);
-   }, this);
-   $("#main").html(this.$el);
-  }
- });
- 
- 
- var tasksView = new App.View.TasksView({collection:tasks});
- tasks.add({name:"new task 5", text:"is some thing interesting..."});
+ App.tasksView = new App.Views.Tasks({collection: App.tasks});
+ $("#main").html( App.tasksView.render().$el );
  
  }());
+

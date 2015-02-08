@@ -18,6 +18,11 @@ p {
  border-radius:5px;
 }
 
+.text {
+ margin: 5px 0px;  
+ background-color: #ffbb22; 
+}
+
 li:hover{
  cursor:pointer;
 }
@@ -37,9 +42,10 @@ header {
  top:0px;
 }
 
-header ul{
+ul {
  padding:0px;
- list-style: none;
+ list-style-image: none;
+ list-style-type: none;
 }
 
 header li{
@@ -52,4 +58,11 @@ header li{
  position:absolute;
  top:60px;
  width:200px;
+}
+
+.task > p.caption{
+ margin: 0px;
+ width: 100%;
+ background-color: #00ccff;
+ border-radius:5px 5px 0px 0px;
 }

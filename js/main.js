@@ -22,8 +22,14 @@
     name:  "New task",
     time:  new Date(),
     text:  "New text",
-	  priorety: 5,
+	priorety: 5,
     deadLine: App.defaultDeadLine()
+  },
+  
+  validate: function ( attr, options){ 
+   if( !$.trim(attr.name)){
+    return "Name must be not empty!";   
+   }
   }
  });
 
@@ -36,18 +42,33 @@
   tagName: "li",
   
   template: template("task_id"),
-
+  
+  initialize:function(){
+   this.model.on("change",this.render, this);
+   this.model.on("destroy",this.remove, this);
+  },
+  
   render: function(){
    this.$el.html(this.template(this.model.toJSON()));
    return this;
   },
 
   events: {
-   "click": "showAlert"
+   "click .edit": "editTask",
+   "click .delete": "deleteTask"
   },
-
-  showAlert: function(){
-    alert("You are clkiked to '"+this.model.get("name")+"'");
+  
+  editTask:function(){
+   var taskTitle = prompt("Change name '"+this.model.get("name")+"'", this.model.get("name")); 
+   this.model.save('name',taskTitle);
+  },
+  
+  deleteTask: function (){
+   this.model.destroy();
+  },
+  
+  remove: function (){
+   this.$el.remove();
   }
  });
 
@@ -97,7 +118,7 @@ App.tasks = new App.Collections.Task([
  text:"Text2"
 },
 {
- name:"Сходитьна работу", 
+ name:"Сходить на работу", 
  deadLine:"18.02.2015 13:21:45", 
  text:"Text3"
 },

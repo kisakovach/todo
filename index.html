@@ -5,25 +5,30 @@
  <title>Backbone todo project</title>
 </head>
  <link rel="stylesheet" type='text/css' href='css/style.css'>
- <script type="text/template" id="task_id">
-  <div class = "task">
-   <p class = "caption"><strong> <%= name %></strong></p>
-   <div class="text"><%= text%></div>
-   <button class = "edit">edit</button>
-   <button class = "delete"> delete </button>
-   <p class ="time"> - <%= deadLine %> </p>
-  </div>
- </script>
+ 
   <body>
     <header>
 	  <p>Hi Man!!<p>
 	  <form action=""  id = "addTask">
-	   <input type ="text" placeholder = "Новая задача">
+	   <p><label>имя:</label>
+	   <input type ="text" placeholder = "Новая задача" data-add-task ="name"></p>
+	   <p><label>text:</label>
+	   <input type ="text" placeholder = "Что нибудь !" data-add-task ="text"></p>
+	   <p><label>время:</label>
+	   <input type ="text" placeholder = "22.12.2015 19:10:30" data-add-task ="time"></p>
 	   <input type = "submit" value ="Добавить">
 	  </form> 
 	</header>
-	
-	<div id = "main"></div>
+  <script type="text/template" id="task_id">
+   <div class = "task">
+    <p class = "caption"><strong> <%= name %></strong></p>
+    <div class="text"><%= text%></div>
+    <button class = "edit">edit</button>
+    <button class = "delete"> delete </button>
+    <p class ="time"> - <%= deadLine %> </p>
+   </div>
+  </script>
+	<div id = "main"> </div>
 	
   </body>
  <script type="text/javascript" src="js/jquery.js"></script>

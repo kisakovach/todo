@@ -3,7 +3,8 @@
  window.App = {
   Models:{},
   Views:{},
-  Collections:{}
+  Collections:{},
+  Routers:{}
  };
  
  App.defaultDeadLine = function(){
@@ -72,6 +73,37 @@
   }
  });
 
+ // View Add Task
+ 
+ App.Views.AddTask = Backbone.View.extend({
+   
+   el: "#addTask",
+   
+   initialized: function (){
+    
+   },
+   
+   events:{
+    "submit": "addTask"
+   },
+   
+   addTask: function (e){
+    e.preventDefault();
+	var nameTask = this.$el.find("input[data-add-task=name]").val();
+	var textTask = this.$el.find("input[data-add-task=text]").val();
+	var timeTask = this.$el.find("input[data-add-task=time]").val();
+	var newTask = new App.Models.Task({
+	 name: nameTask,
+	 text: textTask,
+	 deadLine: timeTask
+	});
+	console.log("Добавили задачу! "+nameTask);
+	this.collection.add(newTask);
+	//console.log(this.$el);
+   }
+   
+ });
+ 
 // Views Collection
 
 App.Views.Tasks = Backbone.View.extend({
@@ -80,6 +112,7 @@ App.Views.Tasks = Backbone.View.extend({
   
   initialize: function (){
    this.render();
+   this.collection.on("add",this.render,this);
    
   },
   
@@ -131,6 +164,7 @@ App.tasks = new App.Collections.Task([
  
  App.tasksView = new App.Views.Tasks({collection: App.tasks});
  $("#main").html( App.tasksView.render().$el );
+ App.addTask = new App.Views.AddTask({collection: App.tasks});
  
  }());
 

@@ -7,6 +7,8 @@
   Routers:{}
  };
  
+ //console.log(vent);
+ 
  App.defaultDeadLine = function(){
   var p = new Date();
   p.setHours(p.getHours()+1);

@@ -1,0 +1,103 @@
+
+
+body{
+
+	width: 320px;
+	height: 480px;
+}
+
+.completed{
+
+	text-decoration: line-through;
+}
+
+#main{
+	border: 2px solid black;
+	width: 90%;
+	height: 60%;
+	overflow-y: auto;
+	overflow-x: hidden;
+	scrollbar-arrow-color: #fff; /* Цвет стрелок */
+    scrollbar-base-color: #ffa12d; /* Цвет полосы прокрутки */
+    scrollbar-shadow-color: #fed189; /* Цвет тени */
+    scrollbar-highlight-color: #fff; /* Цвет светлых участков тени */
+
+}
+
+ul{
+	list-style-type: none;
+	padding: 0px;
+}
+
+
+table{
+	border: 2px solid black;
+	border-collapse: collapse;
+	border-radius: 5px;
+	margin: 2px;
+}
+
+.line {
+ padding-left: 2px ;
+ padding-right: 2px;
+ margin: 0;
+ border-bottom: 2px solid black;
+}
+
+p.line span:nth-child(1) {
+ border-right: 2px solid black;	
+}
+
+p.line span:nth-child(2) {
+ border-right: 2px solid black;	
+}
+
+div.add {
+	margin: 2px;
+	text-align: right;
+	width:30%;
+}
+
+input, textarea {
+	border: 2px solid blue;
+	border-radius: 5px;
+}
+
+.footer {
+	/*
+	position: absolute;
+	*/
+	bottom : 0;
+	background-color:grey;
+	height: 30px;
+	border: 2px solid black;
+	width: 90%;
+	
+}
+
+.footer div {
+	margin: 4px;
+}
+
+.footer button{
+    padding : 0px;
+    margin: 0px;
+	border-right: 2px solid black;
+	border-top: 2px solid black;
+	border-bottom: 2px solid black;
+	background-color: white; 
+	font-size: 12px;
+}
+
+
+.footer .left {
+	border-left: 2px solid black;
+	border-radius: 5px 0 0 5px;
+
+}
+
+.footer .right {
+
+	border-radius: 0 5px 5px 0;
+
+}

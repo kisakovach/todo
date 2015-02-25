@@ -1,27 +1,24 @@
 
 
-body{
-
+body {
+/*
 	width: 320px;
 	height: 480px;
+*/
 }
 
-.completed{
+.completed {
 
 	text-decoration: line-through;
 }
 
-#main{
+#main {
 	border: 2px solid black;
 	width: 90%;
 	height: 60%;
 	overflow-y: auto;
 	overflow-x: hidden;
-	scrollbar-arrow-color: #fff; /* Цвет стрелок */
-    scrollbar-base-color: #ffa12d; /* Цвет полосы прокрутки */
-    scrollbar-shadow-color: #fed189; /* Цвет тени */
-    scrollbar-highlight-color: #fff; /* Цвет светлых участков тени */
-
+	
 }
 
 ul{
@@ -59,7 +56,7 @@ div.add {
 }
 
 input, textarea {
-	border: 2px solid blue;
+	border: 2px solid black;
 	border-radius: 5px;
 }
 

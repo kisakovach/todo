@@ -7,11 +7,10 @@
 </head>
  <body>
     <script type="text/template" id="task_li">
-      <td><%= title%></td><td><%= deadline%></td> 
+      <td><%= title%></td><td><%= deadline.toLocaleTimeString()%></td> 
       <td><input type = 'checkbox' value = <%=completed%> <%=checked%> ></td> 
     </script>
     <script type="text/temolate" id ="add_template">
-      <form  id = "task_form" method="post">
         <div class = "add">
           <label for = "title">Название</label>
           <input type = "text" id = "title" name ="title" >
@@ -25,9 +24,8 @@
           <input type = "text" id = "deadline" name ="deadline" class = "datepicker">
         </div>
         <div class = "add">
-          <input type = "button" id ="submit" value ="Добавить задачу">
+          <input type = "button"  value ="Добавить задачу">
         </div>
-      </form>
     </script>
     <header>
      <div class ="header">
@@ -63,9 +61,22 @@ localStorage.setItem(App.localKey,'[{"id":4,"title":"to do TO DO","text":"","dea
  App.startView = new App.Views.Start();
  
  App.tasks = new App.Collections.Tasks();
+ 
+ 
+App.tasks.comparator = function(task1,task2){
+                var t1 = task1.get("deadline").valueOf();
+                var t2 = task2.get("deadline").valueOf();
+                if(t1 > t2) return -1;
+                if(t1 == t2) return  0;
+                if(t1 < t2) return  1;
+  };
+
  App.tasks.fetchFromLocal();
 
-  vent.on("check_task",App.tasks.saveToLocal,App.tasks);
+ //App.tasks.sort();
+
+ vent.on("check_task",App.tasks.saveToLocal,App.tasks);
+ 
  App.addTaskForm = new App.Views.AddTask({collection: App.tasks});
  
  App.taskListView = new App.Views.Tasks({collection: App.tasks});

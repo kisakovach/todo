@@ -15,11 +15,12 @@
 
         fetchFromLocal: function(){
 
-         var col = JSON.parse(localStorage.getItem(App.localKey));
+         var col = JSON.parse(localStorage.getItem(App.localKey),App.fromUTCDate);
          this.set(col);
-        
-        } 
+         vent.trigger("fetchFromLocal");   
+        }
 
         
+
 
  });

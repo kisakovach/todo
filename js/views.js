@@ -18,7 +18,7 @@ App.Views.Start = Backbone.View.extend({
     "click #time_button"   : "showTimeView"
     },
 
-    showAddForm: function(e){
+    showAddForm: function( e ){
         //e.preventDefault();
         console.log("add button click");
         App.router.navigate("#add",{trigger: true, replace: true});
@@ -47,9 +47,6 @@ App.Views.AddTask = Backbone.View.extend({
 
     template: window.template,
 
-    events:{     
-        "click #submit" : "addTask"
-    },
     
     initialize: function(){
          
@@ -61,17 +58,23 @@ App.Views.AddTask = Backbone.View.extend({
     render: function(){
         
         
-        this.$el.html("");
+       //this.$el.html("");
         this.$el.html(this.template(this.tag_id));
         //this.$el.show();
         return this;
 
     },
 
+    events:{     
+        "click input[type = 'button']" : "addTask"
+    },
+
+
     showAddTask: function(){
         console.log("add form show");
         $("#main").html("");
         $("#main").append(this.render().$el);
+    
     },
 
     
@@ -79,19 +82,21 @@ App.Views.AddTask = Backbone.View.extend({
     addTask: function(e){
 
             console.log("submit");
-            e.preventDefault();
-            task = new App.Models.Task({
-                                       title: $("#title").val(),
-                                       text: $("#text").val(),
-                                       deadline:$("#deadline").val()
-                                    });
+            //e.preventDefault();
+            var task = new App.Models.Task();
+            task.set("title" , $("#title").val(),{validate: true});
+            task.set("text",$("#text").val(),{validate: true});
+            task.set("deadline",new Date($("#deadline").val()),{validate: true});
+    
            //Для бекенда 
            /* 
             task.save();
             
             */
-            this.collection.add(task);
-            this.collection.saveToLocal();
+            if(task.isValid()){
+             this.collection.add(task);
+             this.collection.saveToLocal();
+            }
     }
 
 });
@@ -131,14 +136,13 @@ App.Views.Task = Backbone.View.extend({
     },
 
     taskCompleted: function(e){
-        vent.trigger("check_task");
         this.$el.toggleClass("completed");
         if(this.model.get("completed")>0){
             this.model.set("completed",0)
         } else {
             this.model.set("completed",1);
         };
-        
+         vent.trigger("check_task");
     }
 
 
@@ -155,6 +159,7 @@ App.Views.Tasks = Backbone.View.extend({
          
         //this.$el.attr("rules","all");
         this.listenTo(this.collection ,"add", this.render);
+        //this.listenTo(vent,"fetchFromLocal", this.render);
         //this.render();
             
    },
@@ -164,8 +169,17 @@ App.Views.Tasks = Backbone.View.extend({
         this.$el.html("");
         for(var key in this.group){
             var group = new App.Collections.Tasks(this.group[key]);
+            group.comparator = function(task1,task2){
+                var t1 = task1.get("deadline").valueOf();
+                var t2 = task2.get("deadline").valueOf();
+                if(t1 > t2) return 1;
+                if(t1 == t2) return  0;
+                if(t1 < t2) return  -1;
+            };
+            group.sort();
             var groupView = new App.Views.DayTasks({collection:group});
-            this.$el.append("<div>"+key+"</div>");
+            var localStr= new Date(key);
+            this.$el.append("<div>"+localStr.toLocaleDateString()+"</div>");
             this.$el.append(groupView.render().el);
         };
         return this;

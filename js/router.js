@@ -19,6 +19,7 @@ App.Routers.Router = Backbone.Router.extend({
 
 		showAddTask: function(){
 			
+			App.addTaskForm = new App.Views.AddTask({collection: App.tasks}); 
 			App.addTaskForm.showAddTask();
 		
 		},

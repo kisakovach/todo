@@ -18,9 +18,13 @@
          var col = JSON.parse(localStorage.getItem(App.localKey),App.fromUTCDate);
          this.set(col);
          vent.trigger("fetchFromLocal");   
-        }
+        },
 
         
+        comparator:function(task){
+
+                return  -task.get("deadline").valueOf();
+        }
 
 
  });

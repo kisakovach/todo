@@ -1,38 +1,95 @@
-<!DOCTYPE html->
+<!DOCTYPE html>
 <html>
 <head>
  <meta charset='utf-8'>
  <title>Backbone todo project</title>
+ <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
- <link rel="stylesheet" type='text/css' href='css/style.css'>
- 
-  <body>
+ <body>
+    <script type="text/template" id="task_li">
+      <td><%= title%></td><td><%= deadline.toLocaleTimeString()%></td> 
+      <td><input type = 'checkbox' value = <%=completed%> <%=checked%> ></td> 
+    </script>
+    <script type="text/temolate" id ="add_template">
+        <div class = "add">
+          <label for = "title">Название</label>
+          <input type = "text" id = "title" name ="title" >
+        </div> 
+        <div class = "add">  
+          <label for = "text">Задача:</label>
+          <textarea id = "text" name ="text">Описание задачи</textarea>
+        </div>
+        <div class = "add">  
+          <label for = "deadline">Дата исполнения:</label>
+          <input type = "text" id = "deadline" name ="deadline" class = "datepicker">
+        </div>
+        <div class = "add">
+          <input type = "button"  value ="Добавить задачу">
+        </div>
+    </script>
     <header>
-	  <p>Hi Man!!<p>
-	  <form action=""  id = "addTask">
-	   <p><label>имя:</label>
-	   <input type ="text" placeholder = "Новая задача" data-add-task ="name"></p>
-	   <p><label>text:</label>
-	   <input type ="text" placeholder = "Что нибудь !" data-add-task ="text"></p>
-	   <p><label>время:</label>
-	   <input type ="text" placeholder = "22.12.2015 19:10:30" data-add-task ="time"></p>
-	   <input type = "submit" value ="Добавить">
-	  </form> 
-	</header>
-  <script type="text/template" id="task_id">
-   <div class = "task">
-    <p class = "caption"><strong> <%= name %></strong></p>
-    <div class="text"><%= text%></div>
-    <button class = "edit">edit</button>
-    <button class = "delete"> delete </button>
-    <p class ="time"> - <%= deadLine %> </p>
-   </div>
-  </script>
-	<div id = "main"> </div>
-	
-  </body>
- <script type="text/javascript" src="js/jquery.js"></script>
- <script type="text/javascript" src="js/underscore.js"></script>
- <script type="text/javascript" src="js/backbone.js"></script>
- <script type="text/javascript" src="js/main.js"></script>
-</html>                                                                     
+     <div class ="header">
+      <h1>Hello Tasks</h1>
+     </div>
+    </header>
+    <div id = "main"></div>
+
+  <footer>
+    <div class= "footer">
+      <div>
+        <button id='list_button' class = 'left'>Список</button><button >Переключить</button><button id ='add_button'>Добавить</button><button class = 'right'>Время</button>
+      </div>
+    </div>
+  </footer>
+</body>
+<script type="text/javascript" src = "js/jquery.js"></script>
+<script type="text/javascript" src = "js/jquery-ui.js"></script>
+<script type="text/javascript" src = "js/underscore.js"></script>
+<script type="text/javascript" src = "js/backbone.js"></script>
+<script type="text/javascript" src = "js/main.js"></script>
+<script type="text/javascript" src = "js/models.js"></script>
+<script type="text/javascript" src = "js/views.js"></script>
+<script type="text/javascript" src = "js/collections.js"></script>
+<script type="text/javascript" src = "js/router.js"></script>
+<script>
+/*
+localStorage.setItem(App.localKey,'[{"id":4,"title":"to do TO DO","text":"","deadline":"0000-00-00 00:00:00","completed":0},{"id":5,"title":"Сходить на работу","text":"","deadline":"0000-00-00 00:00:00","completed":0},{"id":8,"title":"Читать книгу","text":"","deadline":"0000-00-00 00:00:00","completed":0},{"id":9,"title":"to do some time","text":"","deadline":"0000-00-00 00:00:00","completed":0},{"id":10,"title":"Go to sleep","text":"","deadline":"0000-00-00 00:00:00","completed":0},{"id":13,"title":"fackin hack","text":"","deadline":"0000-00-00 00:00:00","completed":1},{"id":16,"title":"Что тосделать","text":"Описание задачи","deadline":"0000-00-00 00:00:00","completed":0},{"id":17,"title":"еінфенв","text":"сммолсолм Описание задачи","deadline":"2021-11-20 15:00:00","completed":0},{"id":18,"title":"Тестовая очередб","text":"Описание задачи","deadline":"2015-11-25 00:00:00","completed":0},{"id":19,"title":"Груповой тест","text":"Описание задачи","deadline":"2021-11-20 15:00:00","completed":0},{"id":20,"title":"Тест 2","text":"Описание задачи","deadline":"2015-11-25 00:00:00","completed":0},{"id":21,"title":"Еще одна","text":"Надеюсь сработает","deadline":"2021-11-20 15:00:00","completed":0},{"id":22,"title":"dasfs ","text":"Описание задачи","deadline":"2015-11-25 00:00:00","completed":0},{"id":23,"title":"йуцуй","text":"Описание задачи ивимим","deadline":"2015-11-25 00:00:00","completed":0},{"id":24,"title":"fjfkdsjkf","text":"Описание задачи","deadline":"2015-11-25 21:19:00","completed":0},{"id":25,"title":"Testovaja tranzaccija","text":"Описание задачи: Сегодн доделать сохранение в локал сторедж ","deadline":"2021-11-20 11:00:00","completed":0}]');
+*/
+
+ App.router = new App.Routers.Router();
+ Backbone.history.start();
+ App.startView = new App.Views.Start();
+ 
+ App.tasks = new App.Collections.Tasks();
+ 
+ 
+App.tasks.comparator = function(task1,task2){
+                var t1 = task1.get("deadline").valueOf();
+                var t2 = task2.get("deadline").valueOf();
+                if(t1 > t2) return -1;
+                if(t1 == t2) return  0;
+                if(t1 < t2) return  1;
+  };
+
+ App.tasks.fetchFromLocal();
+
+ //App.tasks.sort();
+
+ vent.on("check_task",App.tasks.saveToLocal,App.tasks);
+ 
+ App.addTaskForm = new App.Views.AddTask({collection: App.tasks});
+ 
+ App.taskListView = new App.Views.Tasks({collection: App.tasks});
+
+ /*App.startView.listenTo(App.tasks, "sync", function(){
+  
+   App.addTaskForm = new App.Views.AddTask({collection: App.tasks});
+   App.taskListView = new App.Views.Tasks({collection: App.tasks});
+   
+ });
+ 
+ App.tasks.fetch();
+*/
+</script>
+
+</html>

@@ -2,6 +2,7 @@
 <html>
 <head>
  <meta charset='utf-8'>
+ <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" >
  <title>Backbone todo project</title>
  <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
@@ -10,7 +11,7 @@
       <td><%= title%></td><td><%= deadline.toLocaleTimeString()%></td> 
       <td><input type = 'checkbox' value = <%=completed%> <%=checked%> ></td> 
     </script>
-    <script type="text/temolate" id ="add_template">
+    <script type="text/template" id ="add_template">
         <div class = "add">
           <label for = "title">Название</label>
           <input type = "text" id = "title" name ="title" >
@@ -27,6 +28,25 @@
           <input type = "button"  value ="Добавить задачу">
         </div>
     </script>
+    <script type="text/template" id ="edit_template">
+        <div class = "add">
+          <label for = "title">Название</label>
+          <input type = "text" id = "title_e" name = "title" value="<%=title%>">
+        </div> 
+        <div class = "add">  
+          <label for = "text">Задача:</label>
+          <textarea id = "text_e" name ="text" value="<%=text%>">Описание задачи</textarea>
+        </div>
+        <div class = "add">  
+          <label for = "deadline">Дата исполнения:</label>
+          <input type = "text" id = "deadline_e" name ="deadline" value = "<%=deadline%>" class = "datepicker">
+        </div>
+        <div class = "add">
+          <input type = "button"  value ="Изменить">
+        </div>
+    </script>
+
+
     <header>
      <div class ="header">
       <h1>Hello Tasks</h1>
@@ -34,13 +54,11 @@
     </header>
     <div id = "main"></div>
 
-  <footer>
     <div class= "footer">
-      <div>
+       <div> 
         <button id='list_button' class = 'left'>Список</button><button >Переключить</button><button id ='add_button'>Добавить</button><button class = 'right'>Время</button>
-      </div>
+       <div>
     </div>
-  </footer>
 </body>
 <script type="text/javascript" src = "js/jquery.js"></script>
 <script type="text/javascript" src = "js/jquery-ui.js"></script>
@@ -52,9 +70,9 @@
 <script type="text/javascript" src = "js/collections.js"></script>
 <script type="text/javascript" src = "js/router.js"></script>
 <script>
-
+/*
 localStorage.setItem(App.localKey,'[{"id":4,"title":"to do TO DO","text":"","deadline":"2015-11-21 18:40:00","completed":0},{"id":5,"title":"Сходить на работу","text":"","deadline":"2015-11-21 17:20:00","completed":0},{"id":8,"title":"Читать книгу","text":"","deadline":"2015-11-20 19:10:00","completed":0},{"id":9,"title":"to do some time","text":"","deadline":"2015-11-20 02:31:00","completed":0},{"id":10,"title":"Go to sleep","text":"","deadline":"2015-11-20 00:52:00","completed":0},{"id":13,"title":"fackin hack","text":"","deadline":"2021-11-20 14:00:00","completed":1},{"id":16,"title":"Что тосделать","text":"Описание задачи","deadline":"02-01-00 03:00:00","completed":0},{"id":17,"title":"еінфенв","text":"сммолсолм Описание задачи","deadline":"2021-11-20 15:00:00","completed":0},{"id":18,"title":"Тестовая очередб","text":"Описание задачи","deadline":"2015-11-25 00:00:00","completed":0},{"id":19,"title":"Груповой тест","text":"Описание задачи","deadline":"2021-11-20 15:00:00","completed":0},{"id":20,"title":"Тест 2","text":"Описание задачи","deadline":"2015-11-25 00:00:00","completed":0},{"id":21,"title":"Еще одна","text":"Надеюсь сработает","deadline":"2021-11-20 15:00:00","completed":0},{"id":22,"title":"dasfs ","text":"Описание задачи","deadline":"2015-11-25 00:00:00","completed":0},{"id":23,"title":"йуцуй","text":"Описание задачи ивимим","deadline":"2015-11-25 00:00:00","completed":0},{"id":24,"title":"fjfkdsjkf","text":"Описание задачи","deadline":"2015-11-25 21:19:00","completed":0},{"id":25,"title":"Testovaja tranzaccija","text":"Описание задачи: Сегодн доделать сохранение в локал сторедж ","deadline":"2021-11-20 11:00:00","completed":0}]');
-
+*/
 
  App.router = new App.Routers.Router();
  Backbone.history.start();
@@ -76,7 +94,8 @@ App.tasks.comparator = function(task1,task2){
  //App.tasks.sort();
 
  vent.on("check_task",App.tasks.saveToLocal,App.tasks);
- 
+ //vent.on("edit_task",App.tasks.saveToLocal,App.tasks);
+
  App.addTaskForm = new App.Views.AddTask({collection: App.tasks});
  
  App.taskListView = new App.Views.Tasks({collection: App.tasks});

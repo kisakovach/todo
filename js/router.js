@@ -1,7 +1,7 @@
 App.Routers.Router = Backbone.Router.extend({
 	routes:{
 		""         : "index",
-		"test/:id" : "test",
+		"edit/:id" : "edit",
 		"add"	   : "showAddTask",
 		"list"	   : "showTaskList" 
 
@@ -11,9 +11,11 @@ App.Routers.Router = Backbone.Router.extend({
 			
 		},
 
-		test : function(id) {
-
+		edit : function(id) {
+			
+			App.editTaskForm = new App.Views.EditTask({ model: App.tasks.get(id)});
 			console.log("test "+id);
+			App.editTaskForm.showEditTask();
 		
 		},
 

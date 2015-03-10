@@ -1,33 +1,45 @@
 
 
 body {
-/*
-	width: 320px;
-	height: 480px;
-*/
+
+padding: 2;
+min-width: 320px;
+min-height: 480px;
+
 }
 
 .completed {
 
 	text-decoration: line-through;
+
+}
+
+
+.header {
+ position: relative;
+ height: 50px;
+ background-color:grey;
+
 }
 
 #main {
+	min-height: 300px;
 	border: 2px solid black;
-	width: 90%;
-	height: 60%;
+	height: 400px;
 	overflow-y: auto;
-	overflow-x: hidden;
-	
+	overflow-x: hidden;  		
 }
 
 ul{
-	list-style-type: none;
-	padding: 0px;
+	
+  list-style-type: none;
+  padding: 0px;
+
 }
 
 
 table{
+
 	border: 2px solid black;
 	border-collapse: collapse;
 	border-radius: 5px;
@@ -35,10 +47,12 @@ table{
 }
 
 .line {
+
  padding-left: 2px ;
  padding-right: 2px;
  margin: 0;
  border-bottom: 2px solid black;
+
 }
 
 p.line span:nth-child(1) {
@@ -52,49 +66,62 @@ p.line span:nth-child(2) {
 div.add {
 	margin: 2px;
 	text-align: right;
-	width:30%;
 }
 
 input, textarea {
+	
 	border: 2px solid black;
 	border-radius: 5px;
 }
 
 .footer {
-	/*
-	position: absolute;
-	*/
-	bottom : 0;
+	position: relative;
+	bottom: 0;
+	margin-top:2px ;
 	background-color:grey;
-	height: 30px;
-	border: 2px solid black;
-	width: 90%;
-	
+	padding: 2px;
+	border: 2px solid black;	
+
 }
 
-.footer div {
-	margin: 4px;
+.footer > div{
+
+	width: 320px;
+	margin-left: auto;
+
 }
 
-.footer button{
-    padding : 0px;
+.footer button {
+    
     margin: 0px;
-	border-right: 2px solid black;
+	border: 1px solid black;
 	border-top: 2px solid black;
 	border-bottom: 2px solid black;
-	background-color: white; 
-	font-size: 12px;
+	background-color: white;
+
 }
 
 
 .footer .left {
+	
 	border-left: 2px solid black;
 	border-radius: 5px 0 0 5px;
 
 }
 
+.footer botton:nth-child(2) {
+
+
+}
+
+.footer botton:nth-child(3) {
+	
+
+}
+
 .footer .right {
 
+	border-right:2px solid black; 
 	border-radius: 0 5px 5px 0;
 
 }

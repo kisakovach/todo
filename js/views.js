@@ -27,6 +27,7 @@ App.Views.Start = Backbone.View.extend({
     showListView: function( e ){
         // body...  
       App.router.navigate("#list",{trigger: true, replace: true});  
+    
     },
 
     showSheduleView: function  () {
@@ -119,23 +120,24 @@ App.Views.Task = Backbone.View.extend({
     
     },
 
-    render: function(){ 
-          var m = this.model.toJSON();
-          m.checked="";
-          if(+(m.completed)>0){ m.checked="checked"
-            this.$el.addClass("completed");
-          };      
-          this.$el.html(this.template(m));
+  render: function(){ 
+           var m = this.model.toJSON();
+           m.checked="";
+           if(+(m.completed)>0){ m.checked="checked"
+             this.$el.addClass("completed");
+           };      
+           this.$el.html(this.template(m));
           
-          return this;      
-    },
+           return this;      
+          },
 
-    events:{
+  events:{
 
-        "click input[type = 'checkbox']" : "taskCompleted"
-    },
+       "click input[type = 'checkbox']" : "taskCompleted",
+       "click": "taskEdit"
+  },
 
-    taskCompleted: function(e){
+  taskCompleted: function(e){
         this.$el.toggleClass("completed");
         if(this.model.get("completed")>0){
             this.model.set("completed",0)
@@ -143,7 +145,13 @@ App.Views.Task = Backbone.View.extend({
             this.model.set("completed",1);
         };
          vent.trigger("check_task");
-    }
+  },
+
+  taskEdit: function(e){
+    console.log("edit");
+    App.router.navigate("#edit/"+this.model.cid,{trigger: true, replace: true});
+
+  }
 
 
 });
@@ -162,7 +170,7 @@ App.Views.Tasks = Backbone.View.extend({
         //this.listenTo(vent,"fetchFromLocal", this.render);
         //this.render();
             
-   },
+    },
 
     render: function(){
         this.group = this.collection.groupBy(App.cropDate);
@@ -231,4 +239,57 @@ App.Views.DayTasks = Backbone.View.extend({
 });
 
 
+App.Views.EditTask = Backbone.View.extend({
 
+ 
+tagName:"div",
+
+    tag_id:"edit_template",
+
+    template: window.template("edit_template"),
+
+    
+    initialize: function(){
+         
+        console.log("init edit");
+        //this.render();
+    
+    },
+
+    render: function(){
+        
+        
+       //this.$el.html("");
+        this.$el.html(this.template(this.model.toJSON()));
+        //this.$el.show();
+        return this;
+
+    },
+
+    showEditTask: function(){
+
+        $("#main").html("");
+        $("#main").append(this.render().$el);
+
+    },
+
+
+    events:{     
+        
+        "click input[type = 'button']" : "editTask"
+    
+    },
+
+
+    editTask: function(e){
+
+        this.model.set("title" , $("#title_e").val(),{validate: true});
+        this.model.set("text",$("#text_e").val(),{validate: true});
+        this.model.set("deadline",new Date($("#deadline_e").val()),{validate: true});
+        if(this.model.isValid){
+         vent.trigger("check_task");
+        }
+    }
+
+
+});

@@ -149,8 +149,9 @@ App.Views.Task = Backbone.View.extend({
 
   taskEdit: function(e){
     console.log("edit");
-    App.router.navigate("#edit/"+this.model.cid,{trigger: true, replace: true});
-
+    if(e.target.nodeName !="INPUT"){
+      App.router.navigate("#edit/"+this.model.cid,{trigger: true, replace: true});
+    }
   }
 
 
@@ -288,6 +289,7 @@ tagName:"div",
         this.model.set("deadline",new Date($("#deadline_e").val()),{validate: true});
         if(this.model.isValid){
          vent.trigger("check_task");
+         console.log()
         }
     }
 

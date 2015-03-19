@@ -5,7 +5,32 @@
       Models : {},
       Views : {},
       Collections : {},
-      Routers:{}
+      Routers:{},
+
+      initialize:function(){
+        
+        this.setSizing();
+
+        Backbone.history.start();
+        
+
+
+        this.router = new this.Routers.Router();
+        this.startView = new this.Views.Start();
+        this.tasks = new this.Collections.Tasks();
+        this.tasks.fetchFromLocal();
+        
+        this.addTaskForm = new this.Views.AddTask({collection: this.tasks});
+        this.taskListView = new this.Views.Tasks({collection: this.tasks});
+        vent.on("check_task",this.tasks.saveToLocal,this.tasks);
+      },
+
+      setSizing:function(){
+
+        $("body").css("width",screen.width);
+        $("body").css("height",screen.height);
+      
+      }
 
     };
 
@@ -40,6 +65,7 @@
       return new Date(date.getFullYear(),date.getMonth(),
         date.getDate()); 
     };
+
 
   }());
 

@@ -53,7 +53,6 @@ App.Views.AddTask = Backbone.View.extend({
          
         console.log("init show");
         //this.render();
-    
     },
 
     render: function(){
@@ -62,19 +61,19 @@ App.Views.AddTask = Backbone.View.extend({
        //this.$el.html("");
         this.$el.html(this.template(this.tag_id));
         //this.$el.show();
-        return this;
+		return this;
 
     },
 
     events:{     
         "click input[type = 'button']" : "addTask"
     },
-
-
+	
     showAddTask: function(){
         console.log("add form show");
         $("#main").html("");
         $("#main").append(this.render().$el);
+		$(".datepicker").datepicker($.datepicker.regional[ "ru" ]);
     
     },
 

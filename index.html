@@ -5,15 +5,18 @@
  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" >
  <title>Backbone todo project</title>
  <link rel="stylesheet" type="text/css" href="css/main.css">
+ <link rel="stylesheet" type="text/css" href="css/datepicker/jquery-ui.css">
+ <link rel="stylesheet" type="text/css" href="css/datepicker/jquery-structure.css">
+ <link rel="stylesheet" type="text/css" href="css/datepicker/jquery-theme.css">
 </head>
  <body>
     <script type="text/template" id="task_li">
       <td><%= title%></td><td><%= deadline.toLocaleTimeString()%></td> 
       <td><input type = 'checkbox' value = <%=completed%> <%=checked%> ></td> 
     </script>
-    <script type="text/template" id ="add_template">
-        <div class = "add">
-          <label for = "title">Название</label>
+    <script type="text/template" id ="add_template"> 
+	   <div class = "add">
+		  <label for = "title">Название</label>
           <input type = "text" id = "title" name ="title" >
         </div> 
         <div class = "add">  
@@ -61,7 +64,8 @@
     </div>
 </body>
 <script type="text/javascript" src = "js/jquery.js"></script>
-<script type="text/javascript" src = "js/jquery-ui.js"></script>
+<script type="text/javascript" src = "js/datepicker/jquery-ui.js"></script>
+<script type="text/javascript" src = "js/datepicker/datepicker-ru.js"></script>
 <script type="text/javascript" src = "js/underscore.js"></script>
 <script type="text/javascript" src = "js/backbone.js"></script>
 <script type="text/javascript" src = "js/main.js"></script>

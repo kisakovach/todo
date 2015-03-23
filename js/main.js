@@ -10,7 +10,6 @@
       initialize:function(){
         
         this.setSizing();
-		
         Backbone.history.start();
         this.router = new this.Routers.Router();
         this.startView = new this.Views.Start();
@@ -24,9 +23,33 @@
 
       setSizing:function(){
 
-        $("body").css("width",window.width);
-        $("body").css("height",window.height);
+        $("body").css("width",$(window).width()- this.getScrollBarWidth());
+        $("body").css("height",$(window).height()- this.getScrollBarWidth());
       
+      },
+
+      getScrollBarHeight: function () {
+        var jTest = $('<div style="display:none;width:50px;overflow: scroll"><div style="width:100px;"><br /><br /></div></div>');
+        $('body').append(jTest);
+        var h = jTest.innerHeight();
+        jTest.css({
+            overflow: 'auto',
+            width: '200px'
+        });
+        var h2 = jTest.innerHeight();
+        return h - h2;
+      },
+
+      getScrollBarWidth: function () {
+          var jTest = $('<div style="display:none;height:50px;overflow: scroll"><div style="height:100px;"></div></div>');
+          $('body').append(jTest);
+          var w = jTest.innerWidth();
+          jTest.css({
+              overflow: 'auto',
+              height: '200px'
+          });
+          var w2 = jTest.innerWidth();
+          return w - w2;
       }
 
     };

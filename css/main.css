@@ -1,11 +1,13 @@
 
 
 body {
+margin: 0;
 position: absolute;
-padding: 2;
+overflow: hidden;
+/*
 min-width: 320px;
 min-height: 480px;
-
+*/
 }
 
 .completed {
@@ -19,15 +21,19 @@ min-height: 480px;
  position: relative;
  height: 50px;
  background-color:grey;
-
+ width: 100%;
+ border: 2px solid black;
+ margin-bottom: 2px;
+ padding: 2px;
 }
 
 #main {
-	min-height: 300px;
+	width: 100%;
 	border: 2px solid black;
-	height: 400px;
+	height: 75%;
 	overflow-y: auto;
 	overflow-x: hidden;  		
+	padding: 2px;
 }
 
 ul{
@@ -75,6 +81,7 @@ input, textarea {
 }
 
 .footer {
+	width: 100%;
 	position: relative;
 	bottom: 0;
 	margin-top:2px ;
@@ -85,9 +92,8 @@ input, textarea {
 }
 
 .footer > div{
-
-	width: 320px;
-	margin-left: auto;
+  width: 90%;	
+  margin-left: auto;
 
 }
 
@@ -98,6 +104,7 @@ input, textarea {
 	border-top: 2px solid black;
 	border-bottom: 2px solid black;
 	background-color: white;
+	width: 25%;
 
 }
 
@@ -106,16 +113,6 @@ input, textarea {
 	
 	border-left: 2px solid black;
 	border-radius: 5px 0 0 5px;
-
-}
-
-.footer botton:nth-child(2) {
-
-
-}
-
-.footer botton:nth-child(3) {
-	
 
 }
 
